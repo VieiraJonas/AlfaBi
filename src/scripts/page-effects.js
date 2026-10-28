@@ -30,10 +30,23 @@ const motion = matchMedia('(prefers-reduced-motion: reduce)');
     }
     setupReveals(); motion.addEventListener('change', setupReveals);
     if (matchMedia('(hover:hover) and (pointer:fine)').matches) {
+      const pending = new Map();
+      let pointerFrame = 0;
+      function paintGlows() {
+        pointerFrame = 0;
+        // Batch all measurements first; apply all style updates afterwards.
+        const positions = [...pending].map(([card, point]) => {
+          const rect = card.getBoundingClientRect();
+          return { card, x: point.x - rect.left, y: point.y - rect.top };
+        });
+        pending.clear();
+        for (const { card, x, y } of positions) {
+          card.style.setProperty('--mx', `${x}px`);
+          card.style.setProperty('--my', `${y}px`);
+        }
+      }
       document.querySelectorAll('.hover-glow').forEach(card => card.addEventListener('pointermove', event => {
-        const rect = card.getBoundingClientRect();
-        card.style.setProperty('--mx', `${event.clientX - rect.left}px`);
-        card.style.setProperty('--my', `${event.clientY - rect.top}px`);
-      }));
+        pending.set(card, { x: event.clientX, y: event.clientY });
+        if (!pointerFrame) pointerFrame = requestAnimationFrame(paintGlows);
+      }, { passive: true }));
     }
-

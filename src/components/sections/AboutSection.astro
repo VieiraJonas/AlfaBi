@@ -1,4 +1,5 @@
 ---
+import { marie, karol, daiana } from '../../assets/images';
 import Button from '../Button.astro';
 import TeamCard from '../TeamCard.astro';
 ---
@@ -9,21 +10,21 @@ import TeamCard from '../TeamCard.astro';
         <div class="team-grid">
           <TeamCard
             name="Marie"
-            image="/assets/equipe/marie-avatar-3d.webp"
+            image={marie}
             color="#f2eafb"
             shape="circle"
             icon="heart"
           />
           <TeamCard
             name="Karol"
-            image="/assets/equipe/karol-avatar-3d.webp"
+            image={karol}
             color="#eaf6ff"
             shape="square"
             icon="spark"
           />
           <TeamCard
             name="Daiana"
-            image="/assets/equipe/daiana-avatar-3d.webp"
+            image={daiana}
             color="#fff0e5"
             shape="arch"
             icon="book"

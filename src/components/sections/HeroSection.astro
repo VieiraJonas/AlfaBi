@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import { heroImageOptions } from '../../assets/hero-image';
 import Button from '../Button.astro';
 ---
 
@@ -19,10 +21,10 @@ import Button from '../Button.astro';
             <div class="visual-glow" aria-hidden="true"></div>
             <div class="scene-label" aria-hidden="true"><span class="tiny-dot"></span>AFETO EM CADA ENCONTRO</div>
             <div class="video-composition" id="video-composition">
-              <img class="video-media video-poster" src="/assets/hero/poster.webp" width="960" height="540" fetchpriority="high" alt="Três professoras da ALFABI em uma cena de acolhimento com os personagens da marca.">
-              <!-- Real provided footage, transcoded to H.264 all-intra. No autoplay, no loop.
+              <Image class="video-media video-poster" {...heroImageOptions} loading="eager" fetchpriority="high" alt="Três professoras da ALFABI em uma cena de acolhimento com os personagens da marca." decoding="auto" />
+              <!-- Real provided footage, transcoded to H.264 with frequent keyframes. No autoplay, no loop.
                    Original: documentacao/video-original/VIDEO1-original.mp4. The poster is a frame of that same video. -->
-              <video class="video-media hero-video" id="hero-video" muted playsinline preload="auto" poster="/assets/hero/poster.webp" width="1920" height="1080" aria-label="Professoras da ALFABI acenam enquanto os mascotes entram na cena. O movimento acompanha a rolagem." aria-describedby="scene-help"></video>
+              <video class="video-media hero-video" id="hero-video" muted playsinline preload="none" width="1920" height="1080" aria-label="Professoras da ALFABI acenam enquanto os mascotes entram na cena. O movimento acompanha a rolagem." aria-describedby="scene-help"></video>
             </div>
             <p class="video-state" id="video-state" role="status" aria-live="polite"></p>
             <div class="scene-signature" aria-hidden="true"><span class="color-dots"><i></i><i></i><i></i><i></i><i></i></span>Acolher. Ensinar. Transformar.</div>
@@ -59,6 +61,23 @@ import { ALFABI_CONFIG } from '../../config/site';
     let libraryPromise, blobURL;
     let loadingBlob = false;
     let initialAnchorRestored = false;
+    let setupFrame = 0;
+    let refreshFrame = 0;
+    let frameHeight = frame.getBoundingClientRect().height;
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(entries => {
+        const entry = entries[0];
+        const height = entry.borderBoxSize?.[0]?.blockSize ?? frame.getBoundingClientRect().height;
+        if (height === frameHeight) return;
+        frameHeight = height;
+        refresh();
+      }).observe(frame);
+    } else {
+      window.addEventListener('resize', () => requestAnimationFrame(() => {
+        frameHeight = frame.getBoundingClientRect().height;
+        refresh();
+      }), { passive: true });
+    }
 
     function loadScript(src) {
       return new Promise((resolve, reject) => {
@@ -71,8 +90,9 @@ import { ALFABI_CONFIG } from '../../config/site';
       });
     }
     function loadLibraries() {
-      if (!libraryPromise) libraryPromise = loadScript(ALFABI_CONFIG.gsap)
-        .then(() => loadScript(ALFABI_CONFIG.scrollTrigger))
+      if (!libraryPromise) libraryPromise = Promise.all([
+        loadScript(ALFABI_CONFIG.gsap), loadScript(ALFABI_CONFIG.scrollTrigger)
+      ])
         .then(() => { gsap.registerPlugin(ScrollTrigger); librariesReady = true; });
       return libraryPromise;
     }
@@ -81,6 +101,8 @@ import { ALFABI_CONFIG } from '../../config/site';
       gsapContext?.revert(); gsapContext = null;
       scene.style.removeProperty('height');
       cancelAnimationFrame(seekFrame); seekFrame = 0;
+      cancelAnimationFrame(setupFrame);
+      cancelAnimationFrame(refreshFrame);
       started = false; video.pause();
     }
     function staticScene(message = '') {
@@ -116,19 +138,27 @@ import { ALFABI_CONFIG } from '../../config/site';
       // One outer container owns all scrub distance; sticky content fills its final viewport.
       const mobile = matchMedia('(max-width: 760px)').matches;
       distance = Math.round(Math.max(mobile ? 850 : 1200, Math.min(mobile ? 1500 : 2600, duration * (mobile ? 240 : 350))));
-      scene.style.height = `${frame.offsetHeight + distance}px`;
+      const height = `${frameHeight + distance}px`;
+      if (scene.style.height !== height) scene.style.height = height;
     }
     function refresh() {
       clearTimeout(refreshTimer);
       refreshTimer = setTimeout(() => {
         if (!started) return;
-        measure(); ScrollTrigger.refresh(); updateScene();
+        measure();
+        cancelAnimationFrame(refreshFrame);
+        refreshFrame = requestAnimationFrame(() => {
+          if (!started) return;
+          ScrollTrigger.refresh(); updateScene();
+        });
       }, 120);
     }
     function setupScroll() {
       if (started || failed || motion.matches || !librariesReady || !metadataReady) return;
       document.documentElement.classList.remove('scene-static'); status.textContent = '';
       started = true; video.pause(); measure();
+      setupFrame = requestAnimationFrame(() => {
+      if (!started || failed || motion.matches) return;
       gsapContext = gsap.context(() => {
         // Native sticky avoids pin spacers and preserves a single, bounded hero container.
         scrollTween = gsap.to(playhead, {
@@ -142,8 +172,8 @@ import { ALFABI_CONFIG } from '../../config/site';
             scrollTrigger: { trigger: scene, start: 'top top', end: () => `+=${distance}`, scrub: .65, invalidateOnRefresh: true } });
         });
         if (performance.now() < 6000 && scrollY < 30) {
-          gsap.from('.hero-copy [data-intro]', { opacity: 0, y: 14, duration: .85, stagger: .08, ease: 'power3.out', clearProps: 'opacity,transform' });
-          gsap.from('.hero-visual', { opacity: 0, scale: .975, y: 8, duration: 1.2, delay: .2, ease: 'expo.out', clearProps: 'opacity,transform' });
+          gsap.from('.hero-copy [data-intro]', { y: 14, duration: .85, stagger: .08, ease: 'power3.out', clearProps: 'opacity,transform' });
+          gsap.from('.hero-visual', { scale: .975, y: 8, duration: 1.2, delay: .2, ease: 'expo.out', clearProps: 'opacity,transform' });
         }
       }, scene);
       ScrollTrigger.refresh(); updateScene();
@@ -151,6 +181,7 @@ import { ALFABI_CONFIG } from '../../config/site';
         initialAnchorRestored = true;
         requestAnimationFrame(() => document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: 'instant', block: 'start' }));
       }
+      });
     }
     function onMetadata() {
       if (!Number.isFinite(video.duration) || video.duration <= 0) return;
@@ -169,7 +200,7 @@ import { ALFABI_CONFIG } from '../../config/site';
       if (video.seekable.length && video.seekable.end(video.seekable.length - 1) > .1) return;
       // Some basic HTTP servers do not implement byte ranges. Chromium then exposes
       // a zero-length seekable interval even after decoding the first frame.
-      // A local Blob of the same ~5 MB MP4 restores random access without a backend.
+      // A local Blob of the MP4 restores random access without a backend.
       loadingBlob = true;
       try {
         const response = await fetch(ALFABI_CONFIG.video);
@@ -216,6 +247,13 @@ import { ALFABI_CONFIG } from '../../config/site';
     motion.addEventListener('change', start);
     // Start static until metadata + libraries are ready; no empty scroll on failure.
     document.documentElement.classList.add('scene-static');
-    start();
+    // Let the visible poster paint before video/CDN requests compete for bandwidth.
+    const poster = visual.querySelector('.video-poster');
+    const afterPoster = () => requestAnimationFrame(() => requestAnimationFrame(start));
+    if (poster.complete) afterPoster();
+    else {
+      poster.addEventListener('load', afterPoster, { once: true });
+      poster.addEventListener('error', afterPoster, { once: true });
+    }
 
 </script>

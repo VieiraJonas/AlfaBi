@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import { logo } from '../assets/images';
 import IconButton from './IconButton.astro';
 const year = new Date().getFullYear();
 ---
@@ -6,7 +8,7 @@ const year = new Date().getFullYear();
   <footer class="site-footer">
     <div class="footer-top wrap"><p>Educação que acolhe,<br>ensina e <span>transforma.</span></p><IconButton variant="back-to-top"  href="/#hero-scene" aria-label="Voltar ao início"><svg aria-hidden="true"><use href="#arrow"/></svg></IconButton></div>
     <div class="wrap footer-grid">
-      <div class="footer-about"><a class="footer-logo" href="/#hero-scene" aria-label="ALFABI — início"><img src="/assets/hero/alfabi-logo.webp" width="765" height="540" loading="lazy" alt="ALFABI — Educação que acolhe, ensina e transforma."></a><p>Um espaço para aprender, desenvolver habilidades e crescer com afeto. No seu ritmo, do seu jeito.</p><span class="color-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></div>
+      <div class="footer-about"><a class="footer-logo" href="/#hero-scene" aria-label="ALFABI — início"><Image src={logo} width="765" height="540" loading="lazy" alt="ALFABI — Educação que acolhe, ensina e transforma." widths={[105, 210, 315]} sizes="(max-width: 760px) 100px, 118px" format="webp" quality={90} decoding="async" /></a><p>Um espaço para aprender, desenvolver habilidades e crescer com afeto. No seu ritmo, do seu jeito.</p><span class="color-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></div>
       <nav class="footer-column" aria-label="Conheça a ALFABI"><h2>Conheça a ALFABI</h2><a href="/#apresentacao">Apresentação</a><a href="/#missao">Missão e valores</a><a href="/#metodologia">Metodologia STEAM</a><a href="/#sobre">Nossa equipe</a><a href="/#depoimentos">Depoimentos</a></nav>
       <div class="footer-column"><h2>Vamos conversar</h2><a data-contact="visit" href="https://wa.me/5527998596818?text=Ol%C3%A1%21%20Gostaria%20de%20agendar%20uma%20visita%20%C3%A0%20ALFABI." target="_blank" rel="noopener noreferrer">Agendar uma visita ↗</a><a data-contact="team" href="https://wa.me/5527998596818?text=Ol%C3%A1%21%20Gostaria%20de%20conversar%20com%20a%20equipe%20da%20ALFABI." target="_blank" rel="noopener noreferrer">(27) 99859-6818</a><a href="/#contato">Fale com a equipe</a><a href="https://www.instagram.com/espacoalfabi/" target="_blank" rel="noopener noreferrer">Instagram ↗</a></div>
       <div class="footer-column"><h2>Nosso espaço</h2><p>Guarapari<br>Espírito Santo</p><a href="/#localizacao">Como nos encontrar ↗</a><span class="footer-tag"><svg aria-hidden="true"><use href="#heart"/></svg>Cada criança é única.</span></div>

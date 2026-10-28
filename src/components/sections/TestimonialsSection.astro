@@ -19,24 +19,52 @@ const motion = matchMedia('(prefers-reduced-motion: reduce)');
     const reviews = document.getElementById('reviews-track');
     const previousReview = document.getElementById('reviews-prev');
     const nextReview = document.getElementById('reviews-next');
-    let reviewTimer;
-    function reviewStep() { return reviews.firstElementChild.getBoundingClientRect().width + parseFloat(getComputedStyle(reviews).columnGap); }
-    function updateReviews() {
-      const max = reviews.scrollWidth - reviews.clientWidth;
-      previousReview.disabled = reviews.scrollLeft <= 2;
-      nextReview.disabled = reviews.scrollLeft >= max - 2;
-      const index = Math.min(2, Math.round(reviews.scrollLeft / reviewStep()));
-      document.getElementById('review-count').textContent = `${String(index + 1).padStart(2, '0')} / 03`;
+    const count = document.getElementById('review-count');
+    let reviewFrame = 0;
+    let step = 1;
+    let maxScroll = 0;
+    const lastIndex = reviews.children.length - 1;
+    function measureReviews() {
+      const width = reviews.firstElementChild.getBoundingClientRect().width;
+      const gap = parseFloat(getComputedStyle(reviews).columnGap) || 0;
+      const scrollWidth = reviews.scrollWidth;
+      const clientWidth = reviews.clientWidth;
+      step = Math.max(1, width + gap);
+      maxScroll = Math.max(0, scrollWidth - clientWidth);
+      scheduleReviews();
     }
-    function moveReview(direction) { reviews.scrollBy({ left: direction * reviewStep(), behavior: motion.matches ? 'instant' : 'smooth' }); }
+    function updateReviews() {
+      reviewFrame = 0;
+      const left = reviews.scrollLeft;
+      const index = Math.max(0, Math.min(lastIndex, Math.round(left / step)));
+      previousReview.disabled = left <= 2;
+      nextReview.disabled = left >= maxScroll - 2;
+      const label = `${String(index + 1).padStart(2, '0')} / ${String(lastIndex + 1).padStart(2, '0')}`;
+      if (count.textContent !== label) count.textContent = label;
+    }
+    function scheduleReviews() {
+      if (!reviewFrame) reviewFrame = requestAnimationFrame(updateReviews);
+    }
+    function moveReview(direction) {
+      reviews.scrollBy({ left: direction * step, behavior: motion.matches ? 'instant' : 'smooth' });
+    }
     previousReview.addEventListener('click', () => moveReview(-1));
     nextReview.addEventListener('click', () => moveReview(1));
-    reviews.addEventListener('scroll', () => { clearTimeout(reviewTimer); reviewTimer = setTimeout(updateReviews, 100); }, { passive: true });
+    reviews.addEventListener('scroll', scheduleReviews, { passive: true });
     reviews.addEventListener('keydown', event => {
-      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); moveReview(event.key === 'ArrowRight' ? 1 : -1); }
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault(); moveReview(event.key === 'ArrowRight' ? 1 : -1);
+      }
     });
-    window.addEventListener('resize', updateReviews, { passive: true });
-    document.fonts?.ready.then(updateReviews); updateReviews();
+    if ('ResizeObserver' in window) {
+      const observer = new ResizeObserver(measureReviews);
+      observer.observe(reviews);
+      observer.observe(reviews.firstElementChild);
+    } else {
+      window.addEventListener('resize', () => requestAnimationFrame(measureReviews), { passive: true });
+    }
+    document.fonts?.ready.then(() => requestAnimationFrame(measureReviews));
+    requestAnimationFrame(measureReviews);
 
 
 </script>

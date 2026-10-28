@@ -1,0 +1,11 @@
+export { default as logo } from './media/logo.webp';
+export { default as poster } from './media/poster.webp';
+export { default as mascots } from './media/mascots.webp';
+export { default as science } from './media/science.webp';
+export { default as technology } from './media/technology.webp';
+export { default as engineering } from './media/engineering.webp';
+export { default as art } from './media/art.webp';
+export { default as math } from './media/math.webp';
+export { default as marie } from './media/marie.webp';
+export { default as karol } from './media/karol.webp';
+export { default as daiana } from './media/daiana.webp';
