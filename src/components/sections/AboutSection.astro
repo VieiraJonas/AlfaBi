@@ -1,0 +1,34 @@
+---
+import Button from '../Button.astro';
+import TeamCard from '../TeamCard.astro';
+---
+
+<section class="chapter about-section" id="sobre" aria-labelledby="about-title">
+      <div class="wrap">
+        <div class="section-heading reveal-up"><div><p class="kicker"><span></span>Sobre nós</p><h2 id="about-title">Gente que acolhe.<br><span class="text-outline">Afeto que ensina.</span></h2></div><div><p>Queremos o melhor para o seu filho — e isso se reflete em nosso trabalho. Nosso olhar se volta para as necessidades de cada criança, com dedicação, cuidado e paixão pelo aprendizado.</p><Button variant="text"  data-contact="visit" href="https://wa.me/5527998596818" target="_blank" rel="noopener noreferrer">Conheça a equipe de perto <svg aria-hidden="true"><use href="#arrow"/></svg></Button></div></div>
+        <div class="team-grid">
+          <TeamCard
+            name="Marie"
+            image="/assets/equipe/marie-avatar-3d.png"
+            color="#f2eafb"
+            shape="circle"
+            icon="heart"
+          />
+          <TeamCard
+            name="Karol"
+            image="/assets/equipe/karol-avatar-3d.png"
+            color="#eaf6ff"
+            shape="square"
+            icon="spark"
+          />
+          <TeamCard
+            name="Daiana"
+            image="/assets/equipe/daiana-avatar-3d.png"
+            color="#fff0e5"
+            shape="arch"
+            icon="book"
+          />
+        </div>
+        <p class="team-bottom reveal-up">Uma parceria com a família. Um olhar para a individualidade.<br><strong>Um espaço para crescer com confiança.</strong></p>
+      </div>
+    </section>

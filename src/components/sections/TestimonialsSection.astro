@@ -1,0 +1,42 @@
+---
+import IconButton from '../IconButton.astro';
+---
+
+<section class="chapter testimonials-section" id="depoimentos" aria-labelledby="testimonials-title">
+      <div class="wrap">
+        <div class="section-heading reveal-up"><div><p class="kicker"><span></span>Quem caminha com a gente</p><h2 id="testimonials-title">Histórias de confiança.<br><span class="text-outline">Laços de verdade.</span></h2></div><div class="reviews-aside"><p>As experiências de quem vive o dia a dia da ALFABI, nas palavras das famílias.</p><div class="slider-controls" aria-label="Controles dos depoimentos"><IconButton variant="round" type="button"  id="reviews-prev" aria-label="Depoimento anterior" disabled><svg aria-hidden="true"><use href="#chevron"/></svg></IconButton><span class="review-count" id="review-count" aria-live="polite">01 / 03</span><IconButton variant="round" type="button"  id="reviews-next" aria-label="Próximo depoimento"><svg aria-hidden="true"><use href="#chevron"/></svg></IconButton></div></div></div>
+        <!-- Testimonials reproduced from ../espacoalfabi.com.br/index.html; no ratings added. -->
+        <div class="reviews-track" id="reviews-track" tabindex="0" role="region" aria-label="Depoimentos das famílias; deslize ou use os botões para navegar">
+          <figure class="review-card"><span class="quote-mark" aria-hidden="true">“</span><blockquote>Encontrei na AlfaBi o que sempre procurei para meu filho: um espaço que entende que cada criança aprende no seu tempo. O acompanhamento individualizado fez toda diferença no desenvolvimento dele, principalmente na leitura e na escrita. É nítido o carinho e a competência das professoras!</blockquote><figcaption><span class="review-avatar" aria-hidden="true">AP</span><div><strong>Ana Paula Ribeiro</strong><span>Família ALFABI</span></div><svg aria-hidden="true"><use href="#heart"/></svg></figcaption></figure>
+          <figure class="review-card"><span class="quote-mark" aria-hidden="true">“</span><blockquote>A AlfaBi superou todas as nossas expectativas. O atendimento é realmente humanizado e o plano pedagógico é feito com base nas necessidades da criança. Minha filha se sente valorizada e confiante, e isso reflete diretamente no desempenho escolar.</blockquote><figcaption><span class="review-avatar" aria-hidden="true">JT</span><div><strong>Juliana Tavares</strong><span>Família ALFABI</span></div><svg aria-hidden="true"><use href="#heart"/></svg></figcaption></figure>
+          <figure class="review-card"><span class="quote-mark" aria-hidden="true">“</span><blockquote>Nos sentimos acolhidos desde o primeiro contato. A equipe da AlfaBi é atenciosa, preparada e demonstra um verdadeiro amor pelo que faz. Ver o progresso da minha filha a cada semana é algo que nos enche de orgulho.</blockquote><figcaption><span class="review-avatar" aria-hidden="true">ML</span><div><strong>Mariana Lopes</strong><span>Família ALFABI</span></div><svg aria-hidden="true"><use href="#heart"/></svg></figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+<script>
+const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    const reviews = document.getElementById('reviews-track');
+    const previousReview = document.getElementById('reviews-prev');
+    const nextReview = document.getElementById('reviews-next');
+    let reviewTimer;
+    function reviewStep() { return reviews.firstElementChild.getBoundingClientRect().width + parseFloat(getComputedStyle(reviews).columnGap); }
+    function updateReviews() {
+      const max = reviews.scrollWidth - reviews.clientWidth;
+      previousReview.disabled = reviews.scrollLeft <= 2;
+      nextReview.disabled = reviews.scrollLeft >= max - 2;
+      const index = Math.min(2, Math.round(reviews.scrollLeft / reviewStep()));
+      document.getElementById('review-count').textContent = `${String(index + 1).padStart(2, '0')} / 03`;
+    }
+    function moveReview(direction) { reviews.scrollBy({ left: direction * reviewStep(), behavior: motion.matches ? 'instant' : 'smooth' }); }
+    previousReview.addEventListener('click', () => moveReview(-1));
+    nextReview.addEventListener('click', () => moveReview(1));
+    reviews.addEventListener('scroll', () => { clearTimeout(reviewTimer); reviewTimer = setTimeout(updateReviews, 100); }, { passive: true });
+    reviews.addEventListener('keydown', event => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); moveReview(event.key === 'ArrowRight' ? 1 : -1); }
+    });
+    window.addEventListener('resize', updateReviews, { passive: true });
+    document.fonts?.ready.then(updateReviews); updateReviews();
+
+
+</script>

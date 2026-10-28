@@ -1,0 +1,66 @@
+---
+import Button from './Button.astro';
+import IconButton from './IconButton.astro';
+---
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a href="/" class="brand" aria-label="ALFABI — início"><img src="/assets/hero/alfabi-logo.png" width="765" height="540" alt="ALFABI — Educação que acolhe, ensina e transforma"><span class="brand-divider" aria-hidden="true"></span><span class="brand-caption" aria-hidden="true">Espaço<br>pedagógico</span></a>
+      <nav class="desktop-nav" aria-label="Navegação principal"><a href="/#apresentacao">Sobre a ALFABI</a><a href="/#metodologia">Metodologia</a><a href="/#sobre">Equipe</a><a href="/#depoimentos">Depoimentos</a><a href="/#contato">Contato</a></nav>
+      <div class="header-actions">
+      <Button variant="unstyled" class="header-contact" data-contact="team" href="https://wa.me/5527998596818?text=Ol%C3%A1!%20Gostaria%20de%20conversar%20com%20a%20equipe%20da%20ALFABI." target="_blank" rel="noopener noreferrer"><span class="contact-icon"><svg aria-hidden="true"><use href="#chat"/></svg></span>Vamos conversar</Button><IconButton variant="menu"  id="menu-toggle" type="button" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobile-menu"><svg aria-hidden="true"><use href="#menu"/></svg></IconButton></div>
+    </div>
+  </header>
+<dialog class="mobile-menu" id="mobile-menu" aria-labelledby="mobile-menu-title"><div class="mobile-menu-top"><h2 class="small-label" id="mobile-menu-title">Explore a ALFABI</h2><IconButton variant="round"  type="button" id="menu-close" aria-label="Fechar menu"><svg aria-hidden="true"><use href="#close"/></svg></IconButton></div><nav aria-label="Navegação móvel"><a href="/#apresentacao"><span>01</span>Apresentação</a><a href="/#missao"><span>02</span>Missão e valores</a><a href="/#metodologia"><span>03</span>Metodologia STEAM</a><a href="/#sobre"><span>04</span>Nossa equipe</a><a href="/#depoimentos"><span>05</span>Depoimentos</a><a href="/#contato"><span>06</span>Contato</a><a href="/#localizacao"><span>07</span>Localização</a></nav><Button variant="primary"  data-contact="visit" href="https://wa.me/5527998596818?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20visita%20%C3%A0%20ALFABI." target="_blank" rel="noopener noreferrer">Agendar uma visita ↗</Button></dialog>
+
+<script>
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    // Full-page navigation and progressive enhancement. Independent of the CDN runtime.
+    const menu = document.getElementById('mobile-menu');
+    const menuToggle = document.getElementById('menu-toggle');
+    menuToggle.addEventListener('click', () => {
+      menu.showModal(); menuToggle.setAttribute('aria-expanded', 'true');
+    });
+    document.getElementById('menu-close').addEventListener('click', () => menu.close());
+    menu.addEventListener('close', () => menuToggle.setAttribute('aria-expanded', 'false'));
+    menu.addEventListener('cancel', () => menuToggle.setAttribute('aria-expanded', 'false'));
+    menu.addEventListener('click', event => {
+      if (event.target !== menu) return;
+      const rect = menu.getBoundingClientRect();
+      if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) menu.close();
+    });
+    document.querySelectorAll('a[href^="#"],a[href^="/#"]').forEach(link => link.addEventListener('click', event => {
+      const url = new URL(link.href);
+      if (url.pathname !== location.pathname) return;
+      const hash = url.hash;
+      const target = document.getElementById(hash.slice(1));
+      if (!target) return;
+      event.preventDefault();
+      if (menu.open) menu.close();
+      if (link.classList.contains('skip-link')) target.focus({ preventScroll: true });
+      try { history.pushState(null, '', hash); } catch { /* Local file previews still navigate by scrolling. */ }
+      requestAnimationFrame(() => target.scrollIntoView({ block: 'start', behavior: motion.matches ? 'auto' : 'smooth' }));
+    }));
+    const siteHeader = document.querySelector('.site-header');
+    let headerFrame = 0;
+    function updateHeader() {
+      siteHeader.classList.toggle('is-scrolled', scrollY > 25);
+      const extent = document.documentElement.scrollHeight - innerHeight;
+      siteHeader.style.setProperty('--page-progress', extent > 0 ? Math.min(1, Math.max(0, scrollY / extent)) : 0);
+      headerFrame = 0;
+    }
+    window.addEventListener('scroll', () => { if (!headerFrame) headerFrame = requestAnimationFrame(updateHeader); }, { passive: true });
+    window.addEventListener('resize', () => { if (innerWidth > 1050 && menu.open) menu.close(); }, { passive: true });
+    updateHeader();
+
+    if ('IntersectionObserver' in window) {
+      const navObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        document.querySelectorAll('.desktop-nav a').forEach(link => {
+          if (link.hash === `#${entry.target.id}`) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        });
+      }), { rootMargin: '-18% 0px -55% 0px', threshold: 0 });
+      document.querySelectorAll('section[id]:not(.hero-scene)').forEach(section => navObserver.observe(section));
+    }
+</script>

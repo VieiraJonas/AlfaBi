@@ -1,0 +1,21 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Button from './Button.astro';
+
+type Props = (HTMLAttributes<'a'> | HTMLAttributes<'button'>) & {
+  href?: string;
+  'aria-label': string;
+  variant?: 'round' | 'menu' | 'back-to-top';
+};
+
+const { variant = 'round', class: className, ...attributes } = Astro.props;
+const classes = {
+  round: 'round-button',
+  menu: 'menu-toggle',
+  'back-to-top': 'footer-top-link',
+};
+---
+
+<Button {...attributes} variant="unstyled" class:list={[classes[variant], className]}>
+  <slot />
+</Button>

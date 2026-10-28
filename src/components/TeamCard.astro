@@ -1,0 +1,41 @@
+---
+interface Props {
+  name: string;
+  image: string;
+  alt?: string;
+  role?: string;
+  color: string;
+  shape: 'circle' | 'square' | 'arch';
+  icon: 'heart' | 'spark' | 'book';
+}
+
+const {
+  name,
+  image,
+  alt = `Avatar ilustrado de ${name}, da equipe ALFABI.`,
+  role = 'Equipe ALFABI',
+  color,
+  shape,
+  icon,
+} = Astro.props;
+---
+
+<figure class="team-card" style={{ '--team-color': color }}>
+  <div class="team-art">
+    <span class:list={['team-shape', `team-${shape}`]} aria-hidden="true"></span>
+    <img
+      src={image}
+      width="1254"
+      height="1254"
+      loading="eager"
+      decoding="async"
+      fetchpriority="low"
+      alt={alt}
+    />
+  </div>
+  <figcaption>
+    <h3>{name}</h3>
+    <span>{role}</span>
+    <svg aria-hidden="true"><use href={`#${icon}`} /></svg>
+  </figcaption>
+</figure>

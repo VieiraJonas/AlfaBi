@@ -1,0 +1,100 @@
+---
+const words = [
+  { text: 'acolher', color: 'purple' },
+  { text: 'alfabetizar', color: 'blue' },
+  { text: 'carinho', color: 'red' },
+  { text: 'brincar', color: 'orange' },
+  { text: 'descobrir', color: 'green' },
+  { text: 'imaginar', color: 'purple' },
+  { text: 'aprender', color: 'blue' },
+  { text: 'crescer', color: 'green' },
+];
+---
+
+<section class="education-marquee" aria-label="Aprender com afeto: acolher, alfabetizar, carinho, brincar, descobrir, imaginar, aprender e crescer.">
+  <div class="word-window" aria-hidden="true">
+    <span class="word-spark spark-left">&#10035;</span>
+    <div class="word-stage">
+      {words.map(({ text, color }, index) => (
+        <span class="education-word" style={{ '--word-color': `var(--brand-${color})`, '--word-delay': `${index * 4}s` }}>
+          {text}<span class="word-period">.</span>
+        </span>
+      ))}
+    </div>
+    <span class="word-spark spark-right">&#10035;</span>
+  </div>
+</section>
+
+<style>
+  .education-marquee {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 12px 24px;
+    border-block: 1px solid var(--line);
+    background: #f8f7fc;
+  }
+  .education-marquee::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: url('/assets/brand/simbolos.png') center / 340px auto repeat;
+    opacity: .055;
+    pointer-events: none;
+  }
+  .word-window {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(14px, 4vw, 52px);
+    margin-inline: auto;
+    width: min(100%, 640px);
+  }
+  .word-stage {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    height: 74px;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+  .education-word {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--word-color);
+    font: 400 clamp(32px, 4vw, 48px) / 1.3 var(--display);
+    letter-spacing: -.035em;
+    white-space: nowrap;
+    opacity: 0;
+    animation: word-marquee 32s var(--ease) infinite;
+    animation-delay: var(--word-delay);
+  }
+  .word-period { color: var(--brand-orange); }
+  .word-spark {
+    flex-shrink: 0;
+    font: 400 23px / 1 var(--sans);
+    color: var(--brand-purple);
+    opacity: .4;
+  }
+  .spark-right { color: var(--brand-orange); transform: rotate(20deg); }
+  @keyframes word-marquee {
+    0% { opacity: 0; transform: translateX(80%); }
+    2%, 10% { opacity: 1; transform: translateX(0); }
+    12.49% { opacity: 0; transform: translateX(-80%); }
+    12.5%, 100% { opacity: 0; transform: translateX(-80%); }
+  }
+  .education-marquee:hover .education-word { animation-play-state: paused; }
+  @media (max-width: 480px) {
+    .education-marquee { padding: 8px 18px; }
+    .word-stage { height: 64px; }
+    .word-spark { font-size: 18px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .education-word { animation: none; opacity: 0; transform: none; }
+    .education-word:first-child { opacity: 1; }
+  }
+</style>

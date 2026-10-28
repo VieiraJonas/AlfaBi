@@ -1,0 +1,42 @@
+---
+import Button from '../Button.astro';
+---
+
+<section class="chapter contact-section" id="contato" aria-labelledby="contact-title">
+      <div class="wrap contact-layout">
+        <div class="section-copy reveal-up"><p class="kicker"><span></span>Vamos nos conhecer?</p><h2 id="contact-title">O próximo passo<br>começa com<br><span class="text-outline">uma conversa.</span></h2><p>Entre em contato conosco para saber mais ou agendar uma visita. Estamos à disposição para responder às suas perguntas e conhecer a sua família.</p><Button variant="unstyled" class="contact-number" href="https://wa.me/5527998596818" data-contact="team" target="_blank" rel="noopener noreferrer"><span class="promise-icon purple"><svg aria-hidden="true"><use href="#chat"/></svg></span><span><small>CONVERSE PELO WHATSAPP</small><strong>(27) 99859-6818</strong></span><svg aria-hidden="true"><use href="#arrow"/></svg></Button><Button variant="text"  href="https://www.instagram.com/espacoalfabi/" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#instagram"/></svg>@espacoalfabi <svg aria-hidden="true"><use href="#arrow"/></svg></Button></div>
+        <form class="contact-form panel reveal-up" id="contact-form" action="https://wa.me/5527998596818" method="get" target="_blank" aria-describedby="form-note">
+          <div class="form-heading"><span class="small-label">UM PRIMEIRO OLÁ</span><h3>Conte um pouco sobre você.</h3></div>
+          <div class="form-grid"><div class="form-field"><label for="contact-name">Seu nome <span aria-hidden="true">*</span></label><input id="contact-name" name="name" autocomplete="name" placeholder="Seu nome completo" minlength="2" maxlength="100" required></div><div class="form-field"><label for="contact-phone">Telefone <span class="optional">opcional</span></label><input id="contact-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(27) 99999-9999" maxlength="24"></div><div class="form-field full-field"><label for="contact-email">E-mail <span class="optional">opcional</span></label><input id="contact-email" name="email" type="email" autocomplete="email" placeholder="voce@exemplo.com" maxlength="150"></div><div class="form-field full-field"><label for="contact-message">Como podemos ajudar? <span aria-hidden="true">*</span></label><textarea id="contact-message" name="message" rows="4" placeholder="Conte um pouco do que você procura…" maxlength="1500" required></textarea></div></div>
+          <p id="form-note" class="form-note">No próximo passo, você revisa e envia a mensagem pelo WhatsApp.</p>
+          <Button variant="primary" beam  type="submit">Continuar no WhatsApp <svg aria-hidden="true"><use href="#arrow"/></svg></Button><p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+<script>
+import { ALFABI_CONFIG } from '../../config/site';
+    // No backend or local storage: the visitor reviews the prepared text in WhatsApp.
+    document.getElementById('contact-form').addEventListener('submit', event => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!form.reportValidity()) return;
+      const data = new FormData(form);
+      const lines = ['Olá! Meu nome é ' + String(data.get('name')).trim() + '.', 'Gostaria de conversar com a equipe da ALFABI.'];
+      if (String(data.get('phone')).trim()) lines.push('Telefone: ' + String(data.get('phone')).trim());
+      if (String(data.get('email')).trim()) lines.push('E-mail: ' + String(data.get('email')).trim());
+      lines.push('', String(data.get('message')).trim());
+      const url = `https://wa.me/${ALFABI_CONFIG.whatsapp}?text=${encodeURIComponent(lines.join('\n'))}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+      document.getElementById('form-status').textContent = 'Revise sua mensagem no WhatsApp antes de enviar. Se a nova aba não abriu, use o link abaixo.';
+      let fallback = document.getElementById('prepared-message');
+      if (!fallback) {
+        fallback = document.createElement('a'); fallback.id = 'prepared-message'; fallback.className = 'text-link';
+        fallback.target = '_blank'; fallback.rel = 'noopener noreferrer'; fallback.textContent = 'Abrir mensagem preparada ↗';
+        form.appendChild(fallback);
+      }
+      fallback.href = url;
+    });
+
+  
+</script>

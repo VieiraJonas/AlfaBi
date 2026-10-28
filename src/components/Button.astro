@@ -1,0 +1,38 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = (HTMLAttributes<'a'> | HTMLAttributes<'button'>) & {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'text' | 'unstyled';
+  beam?: boolean;
+};
+
+const {
+  href,
+  variant = 'primary',
+  beam = false,
+  class: className,
+  type,
+  target,
+  rel,
+  ...attributes
+} = Astro.props;
+const classes = [
+  variant === 'text' ? 'text-link' : variant !== 'unstyled' && ['btn', `btn-${variant}`],
+  beam && 'btn-beam',
+  className,
+];
+const safeRel = target === '_blank'
+  ? [...new Set(`${rel ?? ''} noopener noreferrer`.trim().split(/\s+/))].join(' ')
+  : rel;
+---
+
+{href !== undefined ? (
+  <a {...attributes} href={href} type={type} target={target} rel={safeRel} class:list={classes}>
+    <slot />
+  </a>
+) : (
+  <button {...attributes} type={type ?? 'button'} class:list={classes}>
+    <slot />
+  </button>
+)}
