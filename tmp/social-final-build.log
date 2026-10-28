@@ -1,0 +1,55 @@
+18:18:57 [types] Generated 93ms
+18:18:57 [build] output: "static"
+18:18:57 [build] mode: "static"
+18:18:57 [build] directory: C:\Users\LEGION\Documents\10 - ALFABI\SITE\alfabi.com.br\dist\
+18:18:57 [build] Collecting build info...
+18:18:57 [build] ✓ Completed in 110ms.
+18:18:57 [build] Building static entrypoints...
+18:18:57 [vite] ✓ built in 293ms
+18:18:57 [vite] ✓ built in 73ms
+18:18:57 [build] Rearranging server assets...
+
+ generating static routes 
+18:18:58   ├─ /index.html (+27ms) 
+18:18:58 ✓ Completed in 40ms.
+
+ generating optimized images 
+18:18:58   ▶ /_astro/poster.DRVOqbiA_19BpE6.webp (reused cache entry) (+8ms) (1/34)
+18:18:58   ▶ /_astro/logo.CrUDY5we_ZpJlmE.webp (reused cache entry) (+8ms) (2/34)
+18:18:58   ▶ /_astro/mascots.B3MWJD4z_1CnaJY.webp (reused cache entry) (+8ms) (3/34)
+18:18:58   ▶ /_astro/technology.VCS4OkPL_Z10Ukgl.webp (reused cache entry) (+8ms) (4/34)
+18:18:58   ▶ /_astro/science.CjQ5ViAE_Z1HeE1H.webp (reused cache entry) (+9ms) (5/34)
+18:18:58   ▶ /_astro/art.DALQZ80b_1jxwTz.webp (reused cache entry) (+9ms) (6/34)
+18:18:58   ▶ /_astro/engineering.CowhSAlC_2v6ylV.webp (reused cache entry) (+9ms) (7/34)
+18:18:58   ▶ /_astro/math.Zjl1Pdyx_ZKtcTi.webp (reused cache entry) (+9ms) (8/34)
+18:18:58   ▶ /_astro/marie.BYpoRL0P_Z1SpCBx.webp (reused cache entry) (+9ms) (9/34)
+18:18:58   ▶ /_astro/daiana.DRoa9bpD_Z1S5aNK.webp (reused cache entry) (+9ms) (10/34)
+18:18:58   ▶ /_astro/karol.imI7Jf27_Z1in11Q.webp (reused cache entry) (+9ms) (11/34)
+18:18:58   ▶ /_astro/poster.DRVOqbiA_1ajglI.webp (reused cache entry) (+7ms) (12/34)
+18:18:58   ▶ /_astro/logo.CrUDY5we_2goha9.webp (reused cache entry) (+7ms) (13/34)
+18:18:58   ▶ /_astro/mascots.B3MWJD4z_28EjDj.webp (reused cache entry) (+7ms) (14/34)
+18:18:58   ▶ /_astro/technology.VCS4OkPL_kDF5F.webp (reused cache entry) (+7ms) (15/34)
+18:18:58   ▶ /_astro/science.CjQ5ViAE_J2UEn.webp (reused cache entry) (+7ms) (16/34)
+18:18:58   ▶ /_astro/art.DALQZ80b_ARvwb.webp (reused cache entry) (+7ms) (17/34)
+18:18:58   ▶ /_astro/engineering.CowhSAlC_2vthPR.webp (reused cache entry) (+8ms) (18/34)
+18:18:58   ▶ /_astro/math.Zjl1Pdyx_1bPv95.webp (reused cache entry) (+8ms) (19/34)
+18:18:58   ▶ /_astro/marie.BYpoRL0P_Z1rlSwH.webp (reused cache entry) (+8ms) (20/34)
+18:18:58   ▶ /_astro/daiana.DRoa9bpD_Zkl1Ji.webp (reused cache entry) (+9ms) (21/34)
+18:18:58   ▶ /_astro/karol.imI7Jf27_ZQjgW1.webp (reused cache entry) (+10ms) (22/34)
+18:18:58   ▶ /_astro/poster.DRVOqbiA_Z1YxQFa.webp (reused cache entry) (+5ms) (23/34)
+18:18:58   ▶ /_astro/logo.CrUDY5we_1EUhXq.webp (reused cache entry) (+6ms) (24/34)
+18:18:58   ▶ /_astro/marie.BYpoRL0P_1rcihT.webp (reused cache entry) (+4ms) (25/34)
+18:18:58   ▶ /_astro/daiana.DRoa9bpD_Z5XmE7.webp (reused cache entry) (+3ms) (26/34)
+18:18:58   ▶ /_astro/karol.imI7Jf27_22eTRA.webp (reused cache entry) (+3ms) (27/34)
+18:18:58   ▶ /_astro/logo.CrUDY5we_1PaJln.webp (reused cache entry) (+4ms) (28/34)
+18:18:58   ▶ /_astro/marie.BYpoRL0P_ZimTBA.webp (reused cache entry) (+4ms) (29/34)
+18:18:58   ▶ /_astro/daiana.DRoa9bpD_1G8quw.webp (reused cache entry) (+4ms) (30/34)
+18:18:58   ▶ /_astro/karol.imI7Jf27_hEGX6.webp (reused cache entry) (+4ms) (31/34)
+18:18:58   ▶ /_astro/daiana.DRoa9bpD_1nVeJT.webp (reused cache entry) (+2ms) (32/34)
+18:18:58   ▶ /_astro/marie.BYpoRL0P_ZuKWe4.webp (reused cache entry) (+3ms) (33/34)
+18:18:58   ▶ /_astro/karol.imI7Jf27_Z2weqms.webp (reused cache entry) (+3ms) (34/34)
+18:18:58 ✓ Completed in 31ms.
+
+18:18:58 [build] ✓ Completed in 557ms.
+18:18:58 [build] 1 page(s) built in 695ms
+18:18:58 [build] Complete!

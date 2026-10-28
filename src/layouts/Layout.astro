@@ -7,12 +7,33 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
+  image?: string | URL;
+  imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  type?: 'website' | 'article';
+  siteName?: string;
+  canonical?: string | URL;
 }
 
 const {
   title = 'ALFABI — Cada descoberta começa com acolhimento',
   description = 'Na ALFABI, cada descoberta começa com acolhimento. Um espaço para aprender, desenvolver habilidades e crescer com afeto.',
+  image = '/og-image.jpg',
+  imageAlt = title,
+  imageWidth = 1200,
+  imageHeight = 630,
+  type = 'website',
+  siteName = 'ALFABI',
+  canonical,
 } = Astro.props;
+
+// Prefer the production origin, even when rendering a local development preview.
+const siteURL = Astro.site ?? new URL(Astro.url.origin);
+const canonicalURL = new URL(canonical ?? Astro.url.pathname, siteURL);
+canonicalURL.search = '';
+canonicalURL.hash = '';
+const imageURL = new URL(image, siteURL);
 ---
 
 <!doctype html>
@@ -23,6 +44,24 @@ const {
   <meta name="theme-color" content="#ffffff">
   <meta name="description" content={description}>
   <title>{title}</title>
+  <link rel="canonical" href={canonicalURL.href}>
+
+  <meta property="og:type" content={type}>
+  <meta property="og:url" content={canonicalURL.href}>
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:image" content={imageURL.href}>
+  <meta property="og:image:alt" content={imageAlt}>
+  <meta property="og:image:width" content={String(imageWidth)}>
+  <meta property="og:image:height" content={String(imageHeight)}>
+  <meta property="og:site_name" content={siteName}>
+  <meta property="og:locale" content="pt_BR">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={imageURL.href}>
+  <meta name="twitter:image:alt" content={imageAlt}>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=alfabi">
   <link rel="icon" type="image/x-icon" sizes="32x32" href="/favicon.ico?v=alfabi">
   <link rel="preload" as="font" type="font/ttf" href="/assets/hero/fonts/Pamit.ttf" crossorigin>
