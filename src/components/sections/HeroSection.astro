@@ -8,7 +8,7 @@ import Button from '../Button.astro';
       <div class="hero-frame" id="hero-frame">
         <div class="wrap hero-main">
           <div class="hero-copy">
-            <p class="eyebrow" data-intro><span class="eyebrow-mark" aria-hidden="true">✳</span>Pequenos passos. Grandes descobertas.</p>
+            <p class="eyebrow" data-intro><svg class="eyebrow-mark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><use href="#spark"/></svg>Pequenos passos. Grandes descobertas.</p>
             <h1 class="hero-title" id="hero-title" data-intro><span class="title-line">Cada <span class="title-blue">descoberta</span></span><span class="title-line">começa com</span><span class="title-final text-outline">acolhimento.<svg class="title-stroke" viewBox="0 0 350 18" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 10C75 2 230 3 345 8M60 15c80-7 170-5 228-3"/></svg></span></h1>
             <p class="hero-description" data-intro>Um espaço para aprender, desenvolver habilidades e crescer com afeto. No seu ritmo, do seu jeito.</p>
             <div class="hero-actions" data-intro>
@@ -259,6 +259,18 @@ import { ALFABI_CONFIG } from '../../config/site';
 </script>
 
 <style>
+  .hero-copy .eyebrow-mark {
+    display: block;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    color: var(--brand-purple);
+    background: transparent;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+  }
+
   .hero-scene .hero-frame {
     background: linear-gradient(135deg, #fcfbff 0%, #faf9f7 62%, #f2f0f7 100%);
   }

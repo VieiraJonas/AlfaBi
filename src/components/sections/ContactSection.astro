@@ -32,7 +32,15 @@ import { ALFABI_CONFIG } from '../../config/site';
       let fallback = document.getElementById('prepared-message');
       if (!fallback) {
         fallback = document.createElement('a'); fallback.id = 'prepared-message'; fallback.className = 'text-link';
-        fallback.target = '_blank'; fallback.rel = 'noopener noreferrer'; fallback.textContent = 'Abrir mensagem preparada ↗';
+        fallback.target = '_blank'; fallback.rel = 'noopener noreferrer'; fallback.textContent = 'Abrir mensagem preparada';
+        const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        for (const [name, value] of Object.entries({ width: '16', height: '16', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.6', 'aria-hidden': 'true' })) {
+          icon.setAttribute(name, value);
+        }
+        const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+        arrow.setAttribute('href', '#arrow');
+        icon.appendChild(arrow);
+        fallback.appendChild(icon);
         form.appendChild(fallback);
       }
       fallback.href = url;

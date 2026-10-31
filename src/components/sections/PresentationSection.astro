@@ -19,13 +19,21 @@ import Button from '../Button.astro';
           <span class="art-label label-top">CURIOSIDADE PARA DESCOBRIR</span>
           <Image src={mascots} width={mascots.width} height={mascots.height} loading="lazy" alt="Os cinco mascotes geométricos da ALFABI em 3D, com braços, mãos, pernas e pés, nas cores azul, vermelho, verde, laranja e roxo." widths={[320, 453, 640, 906]} sizes="(max-width: 760px) 85vw, 453px" format="webp" quality={90} decoding="async" />
           <span class="art-sticker"><svg aria-hidden="true"><use href="#heart"/></svg>Afeto para crescer.</span>
-          <span class="art-spark" aria-hidden="true">✳</span>
+          <svg class="art-spark" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><use href="#spark"/></svg>
           <span class="art-label label-bottom">CADA CRIANÇA É ÚNICA.</span>
         </div>
       </div>
     </section>
 
 <style>
+  .art-spark {
+    width: 40px;
+    height: 40px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+  }
+
   .discovery-art {
     padding-block: 56px 88px;
   }
@@ -39,6 +47,11 @@ import Button from '../Button.astro';
   }
 
   @media (max-width: 760px) {
+    .art-spark {
+      width: 30px;
+      height: 30px;
+    }
+
     .discovery-art {
       padding-block: 44px 76px;
     }
