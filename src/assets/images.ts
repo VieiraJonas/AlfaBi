@@ -1,5 +1,5 @@
 export { default as logo } from './media/logo.webp';
-export { default as poster } from './media/poster.webp';
+export { default as poster } from './media/poster-hero2.webp';
 export { default as mascots } from './media/mascots-3d.png';
 export { default as science } from './media/science-3d.png';
 export { default as technology } from './media/technology-3d.png';
