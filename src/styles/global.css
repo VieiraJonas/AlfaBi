@@ -115,21 +115,21 @@ html{scroll-padding-top:calc(var(--nav-height) + 20px)}.chapter,.location-sectio
     .video-composition{width:min(100%,680px);height:auto;aspect-ratio:16/9;max-height:100%}
     @supports(width:1cqw){.video-composition{width:min(100cqw,calc(100cqh * 1.7777778));height:auto;max-height:none;max-width:none;aspect-ratio:16/9}}
 /* Official symbol sheet: /assets/brand/simbolos.webp. Decorative, never interactive. */
-.hero-frame:after,.chapter:after,.promise-strip:after,.location-section:after,.site-footer:after{content:'';position:absolute;inset:-65px;z-index:-1;pointer-events:none;background-image:url('/assets/brand/simbolos.webp');background-repeat:repeat;background-size:470px auto;mix-blend-mode:multiply;opacity:.085;transform:rotate(-7deg) scale(1.1);mask-image:radial-gradient(ellipse at center,transparent 12%,#000 100%);-webkit-mask-image:radial-gradient(ellipse at center,transparent 12%,#000 100%);animation:symbol-drift 28s ease-in-out infinite alternate;animation-play-state:paused}
+.hero-frame:after,.chapter:after,.promise-strip:after,.location-section:after,.site-footer:after{content:'';position:absolute;inset:-65px;z-index:-1;pointer-events:none;background-image:url('/assets/brand/simbolos.webp');background-repeat:repeat;background-size:470px auto;mix-blend-mode:multiply;opacity:.14;transform:rotate(-7deg) scale(1.1);mask-image:radial-gradient(ellipse at center,transparent 12%,#000 100%);-webkit-mask-image:radial-gradient(ellipse at center,transparent 12%,#000 100%);animation:symbol-drift 28s ease-in-out infinite alternate;animation-play-state:paused}
 .hero-frame:after{inset:-25px;z-index:-1;background-size:430px auto;opacity:.12;mask-image:linear-gradient(90deg,#000,transparent 29%,transparent 71%,#000);-webkit-mask-image:linear-gradient(90deg,#000,transparent 29%,transparent 71%,#000)}
 .presentation:after{background-size:450px auto;background-position:40px 0}
-.mission-section:after{background-size:550px auto;opacity:.075;background-position:140px 45px}
-.steam-section:after{background-size:410px auto;opacity:.07}
-.about-section:after{background-size:530px auto;opacity:.09;background-position:70px 90px}
-.testimonials-section:after{background-size:440px auto;opacity:.08;background-position:130px 20px}
-.contact-section:after{background-size:490px auto;opacity:.08;background-position:20px 65px}
+.mission-section:after{background-size:550px auto;opacity:.12;background-position:140px 45px}
+.methodology-section:after{background-size:410px auto;opacity:.115}
+.about-section:after{background-size:530px auto;opacity:.14;background-position:70px 90px}
+.testimonials-section:after{background-size:440px auto;opacity:.13;background-position:130px 20px}
+.contact-section:after{background-size:490px auto;opacity:.13;background-position:20px 65px}
 .promise-strip,.location-section{position:relative;isolation:isolate;overflow:clip}
-.promise-strip:after{background-size:360px auto;opacity:.065;mask-image:linear-gradient(90deg,#000,transparent 40%,transparent 60%,#000);-webkit-mask-image:linear-gradient(90deg,#000,transparent 40%,transparent 60%,#000)}
-.location-section:after{background-size:390px auto;opacity:.08;mask-image:linear-gradient(90deg,#000,transparent 35%,#000);-webkit-mask-image:linear-gradient(90deg,#000,transparent 35%,#000)}
-.site-footer:after{background-size:500px auto;filter:grayscale(1) invert(1);mix-blend-mode:screen;opacity:.08;mask-image:linear-gradient(90deg,transparent,#000);-webkit-mask-image:linear-gradient(90deg,transparent,#000)}
+.promise-strip:after{background-size:360px auto;opacity:.105;mask-image:linear-gradient(90deg,#000,transparent 40%,transparent 60%,#000);-webkit-mask-image:linear-gradient(90deg,#000,transparent 40%,transparent 60%,#000)}
+.location-section:after{background-size:390px auto;opacity:.13;mask-image:linear-gradient(90deg,#000,transparent 35%,#000);-webkit-mask-image:linear-gradient(90deg,#000,transparent 35%,#000)}
+.site-footer:after{background-size:500px auto;filter:grayscale(1) invert(1);mix-blend-mode:screen;opacity:.13;mask-image:linear-gradient(90deg,transparent,#000);-webkit-mask-image:linear-gradient(90deg,transparent,#000)}
 .hero-frame.is-inview:after,.chapter.is-inview:after,.promise-strip.is-inview:after,.location-section.is-inview:after,.site-footer.is-inview:after{animation-play-state:running}
 /* Team artwork stays visible independently of scroll-reveal initialization. */
 .team-card{opacity:1;visibility:visible}.team-art{min-height:180px}.team-art img{display:block;visibility:visible;opacity:1}
 @keyframes symbol-drift{from{background-position:0 0}to{background-position:24px -18px}}
-@media(max-width:760px){.hero-frame:after,.chapter:after,.promise-strip:after,.location-section:after,.site-footer:after{background-size:340px auto;inset:-35px;opacity:.075}.hero-frame:after{opacity:.095;mask-image:linear-gradient(90deg,#000,transparent 25%,transparent 75%,#000);-webkit-mask-image:linear-gradient(90deg,#000,transparent 25%,transparent 75%,#000)}.site-footer:after{opacity:.065}}
+@media(max-width:760px){.hero-frame:after,.chapter:after,.promise-strip:after,.location-section:after,.site-footer:after{background-size:340px auto;inset:-35px;opacity:.12}.hero-frame:after{opacity:.13;mask-image:linear-gradient(90deg,#000,transparent 25%,transparent 75%,#000);-webkit-mask-image:linear-gradient(90deg,#000,transparent 25%,transparent 75%,#000)}.site-footer:after{opacity:.105}}
 @media(prefers-reduced-motion:reduce){.hero-frame:after,.chapter:after,.promise-strip:after,.location-section:after,.site-footer:after{animation:none!important}}

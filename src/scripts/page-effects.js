@@ -20,7 +20,7 @@ const motion = matchMedia('(prefers-reduced-motion: reduce)');
       revealTargets.forEach((target, i) => {
         if (target.classList.contains('active')) return;
         target.classList.add('will-reveal');
-        target.style.transitionDelay = `${(i % 3) * 60}ms`;
+        target.style.transitionDelay = `${target.dataset.revealDelay ?? (i % 3) * 60}ms`;
         revealObserver.observe(target);
       });
     }
