@@ -17,10 +17,30 @@ import Button from '../Button.astro';
         <div class="discovery-art reveal-zoom" aria-label="Os personagens coloridos da marca ALFABI">
           <span class="art-orbit" aria-hidden="true"></span><span class="art-orbit second" aria-hidden="true"></span>
           <span class="art-label label-top">CURIOSIDADE PARA DESCOBRIR</span>
-          <Image src={mascots} width="453" height="177" loading="lazy" alt="Os cinco mascotes geométricos da ALFABI, nas cores azul, vermelho, verde, laranja e roxo." widths={[320, 453, 640, 906]} sizes="(max-width: 760px) 85vw, 453px" format="webp" quality={90} decoding="async" />
+          <Image src={mascots} width={mascots.width} height={mascots.height} loading="lazy" alt="Os cinco mascotes geométricos da ALFABI em 3D, com braços, mãos, pernas e pés, nas cores azul, vermelho, verde, laranja e roxo." widths={[320, 453, 640, 906]} sizes="(max-width: 760px) 85vw, 453px" format="webp" quality={90} decoding="async" />
           <span class="art-sticker"><svg aria-hidden="true"><use href="#heart"/></svg>Afeto para crescer.</span>
           <span class="art-spark" aria-hidden="true">✳</span>
           <span class="art-label label-bottom">CADA CRIANÇA É ÚNICA.</span>
         </div>
       </div>
     </section>
+
+<style>
+  .discovery-art {
+    padding-block: 56px 88px;
+  }
+
+  .art-sticker {
+    bottom: 7%;
+  }
+
+  .label-bottom {
+    bottom: 0;
+  }
+
+  @media (max-width: 760px) {
+    .discovery-art {
+      padding-block: 44px 76px;
+    }
+  }
+</style>

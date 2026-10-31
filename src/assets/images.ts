@@ -1,6 +1,6 @@
 export { default as logo } from './media/logo.webp';
 export { default as poster } from './media/poster.webp';
-export { default as mascots } from './media/mascots.webp';
+export { default as mascots } from './media/mascots-3d.png';
 export { default as science } from './media/science.webp';
 export { default as technology } from './media/technology.webp';
 export { default as engineering } from './media/engineering.webp';
